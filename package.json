@@ -1,0 +1,29 @@
+{
+  "name": "stromdao-node",
+  "version": "0.0.1",
+  "description": "Fullstack Node with delegation to handle decentral browser clients",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoernert/stromdao-node.git"
+  },
+  "keywords": [
+    "blockchain",
+    "energy",
+    "node",
+    "stromdao"
+  ],
+  "author": "Thorsten Zoerner <me@thorsten-zoerner.com> (https://blog.stromhaltig.de)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zoernert/stromdao-node/issues"
+  },
+  "homepage": "https://github.com/zoernert/stromdao-node#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "web3": "^0.18.2"
+  }
+}
