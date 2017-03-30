@@ -17,7 +17,8 @@ var api = 'https://api.storj.io';
 var storjclient = storj.BridgeClient(api);
 */
 
-
+// this is a test TODO delete this with next commit.
+console.log('hello from Stefan ', '(testing commit workflow)')
 
 var app = express();
 
