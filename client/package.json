@@ -14,8 +14,10 @@
     "ipfs": "^0.23.1",
     "morgan": "~1.7.0",
     "node-persist": "^2.0.10",
+    "orbit_": "^0.1.0",
     "pug": "~2.0.0-beta10",
     "serve-favicon": "~2.3.2",
+    "smokesignal": "^0.2.2",
     "storj": "^4.0.1"
   }
 }

@@ -8,6 +8,10 @@ var storage = require('node-persist');
 var fs = require('fs');
 storage.initSync();
 
+const Orbit = require('orbit_');
+const orbit = new Orbit(ipfs)
+
+
 module.exports = {	
 	tx:function(app) {
 		var persistFile=function(req,res,bucket) {		
@@ -212,6 +216,7 @@ module.exports = {
 				
 				ipfs.files.add(new Buffer(JSON.stringify(msg))).then(function(o) {
 						console.log(o);
+						orbit.send('stromdao',JSON.stringify(o));
 						res.json({ status: 'ok',storage:o[0]});	
 				});
 			}
@@ -294,3 +299,13 @@ module.exports = {
 		});
 	}
 };
+
+orbit.events.on('connected', (network) => {
+  console.log(`Connected to ${network.name} as ${orbit.user.name} and ${orbit.user.id}`)
+  console.log(network);
+  orbit.join('stromdao').then(function(channel) {console.log("joined",channel);});  
+  
+});
+orbit.connect("stromdao.node.0");
+//orbit.join('announcements');
+orbit.events.on('message', (channel, message) => console.log("Message on Channel:",message));
