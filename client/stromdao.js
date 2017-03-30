@@ -312,8 +312,7 @@ const receiveMsg = (msg) => {
 					var string = ''
 					stream.on('data',function(buffer){
 					  var part = buffer;
-					  string += part;
-					  console.log('stream data ' + part);
+					  string += part;					  
 					});
 
 
@@ -328,7 +327,7 @@ const receiveMsg = (msg) => {
 						});
 						// handle reply
 						if(typeof json.type !="undefined") {
-							if(json.type=="responds") {									
+							if(json.type=="respond") {									
 									var kv = orbitdb.kvstore("subscribtions");
 									var listener = kv.get(json.respond);
 									if(listener) {									
