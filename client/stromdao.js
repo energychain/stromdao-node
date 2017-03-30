@@ -8,10 +8,6 @@ var storage = require('node-persist');
 var fs = require('fs');
 storage.initSync();
 
-/*
-const Orbit = require('orbit_');
-const orbit = new Orbit(ipfs)
-*/
 
 module.exports = {	
 	tx:function(app) {
@@ -215,9 +211,7 @@ module.exports = {
 				msg.mediation={};
 				msg.mediation.peer=ipfs.id;
 				
-				ipfs.files.add(new Buffer(JSON.stringify(msg))).then(function(o) {
-						console.log(o);
-						//orbit.send('stromdao',JSON.stringify(o));
+				ipfs.files.add(new Buffer(JSON.stringify(msg))).then(function(o) {											
 						ipfs.pubsub.publish('stromdao',new Buffer(JSON.stringify(o)),function(l) { console.log(l); });
 						res.json({ status: 'ok',storage:o[0]});	
 				});
@@ -302,21 +296,7 @@ module.exports = {
 	}
 };
 
-/*
-orbit.events.on('connected', (network) => {
-  console.log(`Connected to ${network.name} as ${orbit.user.name} and ${orbit.user.id}`)
-  console.log(network);
-  orbit.join('stromdao').then(function(channel) {console.log("joined",channel);
-	console.log(orbit.get('stromdao').then(function(m) {console.log(m);}));
-  
-  });  
-  
-  
-});
-orbit.connect("stromdao.node.0");
-//orbit.join('announcements');
-orbit.events.on('message', (channel, message) => console.log("Message on Channel:",message));
-*/
+
 const receiveMsg = (msg) => {
   console.log(msg.data.toString());
 }
