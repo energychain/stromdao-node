@@ -321,4 +321,5 @@ const receiveMsg = (msg) => {
   console.log(msg.data.toString());
 }
 //console.log(ipfs);
+ipfs.swarm.connect('/ip4/45.32.155.49/tcp/4001/ipfs/QmYdn8trPQMRZEURK3BRrwh2kSMrb6r6xMoFr1AC1hRmNG');
 ipfs.pubsub.subscribe('stromdao', {discover:true}, receiveMsg);
