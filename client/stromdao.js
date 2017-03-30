@@ -303,7 +303,11 @@ module.exports = {
 orbit.events.on('connected', (network) => {
   console.log(`Connected to ${network.name} as ${orbit.user.name} and ${orbit.user.id}`)
   console.log(network);
-  orbit.join('stromdao').then(function(channel) {console.log("joined",channel);});  
+  orbit.join('stromdao').then(function(channel) {console.log("joined",channel);
+	console.log(orbit.get('stromdao').then(function(m) {console.log(m);}));
+  
+  });  
+  
   
 });
 orbit.connect("stromdao.node.0");
