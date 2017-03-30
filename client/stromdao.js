@@ -3,6 +3,8 @@
 //var stream = require('stream');
 var ipfsAPI = require('ipfs-api');
 var ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'}) 
+const OrbitDB = require('orbit-db')
+const orbitdb = new OrbitDB(ipfs);
 var Wallet = require("ethers-wallet");
 var storage = require('node-persist');
 var fs = require('fs');
@@ -213,6 +215,10 @@ module.exports = {
 				
 				ipfs.files.add(new Buffer(JSON.stringify(msg))).then(function(o) {											
 						ipfs.pubsub.publish('stromdao',new Buffer(JSON.stringify(o)),function(l) { console.log(l); });
+						var archiveq = orbitdb.eventlog(msg.signee);
+						archiveq.add(o[0].hash);
+						var kv = orbitdb.kvstore("subscribtions");
+						kv.set(o[0].hash,msg.signee);
 						res.json({ status: 'ok',storage:o[0]});	
 				});
 			}
@@ -298,6 +304,44 @@ module.exports = {
 
 
 const receiveMsg = (msg) => {
+	// Todo Implement Broadcast handling
+  var message=JSON.parse(msg.data.toString());
+  var hash = message[0].hash;
+
+  ipfs.files.cat(hash,function(e,stream) {
+					var string = ''
+					stream.on('data',function(buffer){
+					  var part = buffer;
+					  string += part;
+					  console.log('stream data ' + part);
+					});
+
+
+					stream.on('end',function(){					 
+					 // string is message body;
+						var archiveq = orbitdb.eventlog('msgs');						
+						var json=JSON.parse(string);
+						archiveq.add(json).then(() => {
+						//	const items = log.iterator().collect()
+						//	items.forEach((e) => console.log(e));
+							// "hello world"
+						});
+						// handle reply
+						if(typeof json.type !="undefined") {
+							if(json.type=="responds") {									
+									var kv = orbitdb.kvstore("subscribtions");
+									var listener = kv.get(json.respond);
+									if(listener) {									
+										var msq = orbitdb.eventlog(listener);			
+										msq.add(json);
+										console.log("Addes to msq of ",listener);
+									}
+							}
+						}
+					});
+				});
+
+				
   console.log(msg.data.toString());
 }
 //console.log(ipfs);
