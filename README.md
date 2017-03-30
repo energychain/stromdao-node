@@ -7,7 +7,11 @@ This node package contains middleware and front-end code to setup a swarm node.
 
 
 ## Requirements
-Running IPFS Node ( https://ipfs.io/ )
+Running IPFS Node ( https://ipfs.io/ ) with flag 
+```
+--enable-pubsub-experiment
+```
+
 
 ## Installation
 ```
