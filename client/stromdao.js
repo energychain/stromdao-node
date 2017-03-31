@@ -215,23 +215,23 @@ module.exports = {
 				
 				ipfs.files.add(new Buffer(JSON.stringify(msg))).then(function(o) {											
 						ipfs.pubsub.publish('stromdao',new Buffer(JSON.stringify(o)),function(l) { console.log(l); });
-						var archiveq = orbitdb.eventlog(msg.signee);
+						//var archiveq = orbitdb.eventlog(msg.signee);
 						archiveq.add(o[0].hash);
-						var kv = orbitdb.kvstore("subscribtions");
-						kv.set(o[0].hash,msg.signee);
+						
+						subscriptions.set(o[0].hash,msg.signee).then( () => {
+							console.log("Subscription saved for ",o[0].hash,msg.signee);
+						});						
 						res.json({ status: 'ok',storage:o[0]});	
 				});
 			}
 		});
 		app.use('/cat',function(req,res) {			
-				var hash=""+req.param("hash");
-				console.log(hash);
+				var hash=""+req.param("hash");				
 				ipfs.files.cat(hash,function(e,stream) {
 					var string = ''
 					stream.on('data',function(buffer){
 					  var part = buffer;
-					  string += part;
-					  console.log('stream data ' + part);
+					  string += part;					 
 					});
 
 
@@ -241,6 +241,14 @@ module.exports = {
 					});
 				});
 							
+		});
+		app.use('/mq',function(req,res) {
+
+				const items = archiveq.iterator().collect();
+				res.json(items);
+				//items.forEach((e) => 
+				//res.end();
+				
 		});
 		app.use('/tx/bucket/retrieve',function(req,res) {
 			if((typeof req.dapp_from == "undefined")||(req.dapp_from=="0x0")) {
@@ -318,7 +326,7 @@ const receiveMsg = (msg) => {
 
 					stream.on('end',function(){					 
 					 // string is message body;
-						var archiveq = orbitdb.eventlog('msgs');						
+												
 						var json=JSON.parse(string);
 						archiveq.add(json).then(() => {
 						//	const items = log.iterator().collect()
@@ -326,10 +334,15 @@ const receiveMsg = (msg) => {
 							// "hello world"
 						});
 						// handle reply
-						if(typeof json.type !="undefined") {
-							if(json.type=="respond") {									
-									var kv = orbitdb.kvstore("subscribtions");
-									var listener = kv.get(json.respond);
+						json.data=JSON.parse(json.data);
+						
+						if(typeof json.data.type !="undefined") {
+						
+							if(json.data.type=="respond") {	
+									console.log("Checking Respond",json.data.respond);
+									
+									var listener = subscriptions.get(json.data.respond);
+									console.log(listener);
 									if(listener) {									
 										var msq = orbitdb.eventlog(listener);			
 										msq.add(json);
@@ -346,3 +359,10 @@ const receiveMsg = (msg) => {
 //console.log(ipfs);
 ipfs.swarm.connect('/ip4/45.32.155.49/tcp/4001/ipfs/QmYdn8trPQMRZEURK3BRrwh2kSMrb6r6xMoFr1AC1hRmNG');
 ipfs.pubsub.subscribe('stromdao', {discover:true}, receiveMsg);
+var subscriptions = orbitdb.kvstore("subscriptions");
+subscriptions.events.on('ready', () => {
+  console.log("subscriptions ready to use");
+})
+var archiveq = orbitdb.eventlog('msgs');
+archiveq.load();
+//var kv = orbitdb.kvstore("subscriptions");
