@@ -8,6 +8,7 @@ const orbitdb = new OrbitDB(ipfs);
 var Wallet = require("ethers-wallet");
 var storage = require('node-persist');
 var fs = require('fs');
+var http = require('http');
 storage.initSync();
 
 
@@ -243,11 +244,19 @@ module.exports = {
 							
 		});
 		app.use('/mq',function(req,res) {
-
-				const items = archiveq.iterator().collect();
-				res.json(items);
-				//items.forEach((e) => 
-				//res.end();
+				var next=req.param("hash");
+				if(next!=null) {
+						var next=archiveq.get(next);
+						if(next!=null) {
+							res.json(archiveq.get(next));
+						} else {
+								// try to get Hash...
+								res.end();
+						}
+				} else {
+					const items = archiveq.iterator().collect();
+					res.json(items[0]);
+				}				
 				
 		});
 		app.use('/tx/bucket/retrieve',function(req,res) {
@@ -329,11 +338,7 @@ const receiveMsg = (msg) => {
 												
 						var json=JSON.parse(string);
 						archiveq.add(json).then(() => {
-						//	const items = log.iterator().collect()
-						//	items.forEach((e) => console.log(e));
-							// "hello world"
 						});
-						// handle reply
 						json.data=JSON.parse(json.data);
 						
 						if(typeof json.data.type !="undefined") {
@@ -351,14 +356,16 @@ const receiveMsg = (msg) => {
 							}
 						}
 					});
-				});
-
-				
+				});				
   console.log(msg.data.toString());
 }
-//console.log(ipfs);
-ipfs.swarm.connect('/ip4/45.32.155.49/tcp/4001/ipfs/QmYdn8trPQMRZEURK3BRrwh2kSMrb6r6xMoFr1AC1hRmNG');
-ipfs.pubsub.subscribe('stromdao', {discover:true}, receiveMsg);
+
+stromdaonodes= [
+    { ipfs:'/ip4/45.32.155.49/tcp/4001/ipfs/QmYdn8trPQMRZEURK3BRrwh2kSMrb6r6xMoFr1AC1hRmNG'',
+	  node:'45.32.155.49:3000',	 
+	}
+]
+
 var subscriptions = orbitdb.kvstore("subscriptions");
 subscriptions.events.on('ready', () => {
   console.log("subscriptions ready to use");
@@ -366,3 +373,9 @@ subscriptions.events.on('ready', () => {
 var archiveq = orbitdb.eventlog('msgs');
 archiveq.load();
 //var kv = orbitdb.kvstore("subscriptions");
+
+stromdaonodes.forEach((n) => {
+	console.log("Connecting",n);
+	ipfs.swarm.connect(n.ipfs);	
+})
+ipfs.pubsub.subscribe('stromdao', {discover:true}, receiveMsg);
