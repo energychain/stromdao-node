@@ -361,7 +361,7 @@ const receiveMsg = (msg) => {
 }
 
 stromdaonodes= [
-    { ipfs:'/ip4/45.32.155.49/tcp/4001/ipfs/QmYdn8trPQMRZEURK3BRrwh2kSMrb6r6xMoFr1AC1hRmNG'',
+    { ipfs:'/ip4/45.32.155.49/tcp/4001/ipfs/QmYdn8trPQMRZEURK3BRrwh2kSMrb6r6xMoFr1AC1hRmNG',
 	  node:'45.32.155.49:3000' 
 	}
 ]
