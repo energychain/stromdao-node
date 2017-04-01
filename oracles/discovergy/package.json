@@ -1,0 +1,30 @@
+{
+  "name": "stromdao-discovergy",
+  "version": "0.0.2",
+  "description": "Discovergy Oracle for ZSG (Zählerstandsgang)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/energychain/stromdao-discovergy.git"
+  },
+  "keywords": [
+    "blockchain",
+    "energy",
+    "node",
+    "stromdao",
+	"discvoergy"
+  ],
+  "author": "Thorsten Zoerner <thorsten.zoerner@stromdao.de> (https://stromdao.de)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/energychain/stromdao-discovergy/issues"
+  },
+  "homepage": "https://github.com/energychain/stromdao-discovergy#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "web3": "^0.18.2"
+  }
+}
