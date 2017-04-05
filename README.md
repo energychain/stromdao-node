@@ -20,7 +20,7 @@ cd client
 npm install
 ```
 
-## Usage
+## Usage UI Service (for clients)
 ```
 cd client
 npm start

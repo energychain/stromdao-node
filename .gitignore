@@ -4,3 +4,4 @@ tmp/
 key.ring/
 orbit-db/
 orbit/
+test.js
