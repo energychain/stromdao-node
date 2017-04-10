@@ -33,6 +33,7 @@ contract owned {
 contract GWALink is owned {
     uint80 constant None = uint80(0); 
     
+    // Freigaben für einzelne Nodes
     struct ClearanceLimits {
         uint256 min_time;
         uint256 min_power;
@@ -42,63 +43,59 @@ contract GWALink is owned {
         bool valid;
     }
     
+    // Representation eines Zählerstandes
     struct ZS {
         uint256 time;
-        uint256 power;
+        uint256 power_in;
+        uint256 power_out;
         address oracle;
     }
     
-    event recleared(address stromkonto);
+    event recleared(address link);
+    event pinged(address link,uint256 time,uint256 power_in,uint256 power_out);
     
     ClearanceLimits public defaultLimits = ClearanceLimits(1,1,86400,1000,owner,true);
-    mapping(address=>ClearanceLimits) public clearances;
-    mapping(address=>ZS) public  zss;
+  
+    mapping(address=>ZS) public zss;
     
-    function changeDefaults(uint256 _min_time,uint256 _min_power,uint256 _max_time, uint256 _max_power,bool _clearance) onlyOwner {
+    function changeClearance(uint256 _min_time,uint256 _min_power,uint256 _max_time, uint256 _max_power,bool _clearance) onlyOwner {
         defaultLimits = ClearanceLimits(_min_time,_min_power,_max_time,_max_power,msg.sender,_clearance);
     }
     
-    function  _retrieveClearance(address stromkonto) private returns (ClearanceLimits) {
-        ClearanceLimits  limits = defaultLimits;
-        if(clearances[msg.sender].definedBy==owner) { limits=clearances[msg.sender];}
-        if(clearances[stromkonto].definedBy==owner) { limits=clearances[stromkonto];}
-        return limits;
-    }
+
     
-    function getClearance(address stromkonto) returns (uint256, uint256,uint256,uint256,address,bool) {
-        ClearanceLimits memory limits = _retrieveClearance(stromkonto);
-        return (limits.min_time,limits.min_power,limits.max_time,limits.max_power,limits.definedBy,limits.valid);
-    }
-    
-    function changeMPO(address stromkonto) onlyOwner {
-         ZS zs = zss[stromkonto];
-         zs.oracle=msg.sender;
+    function changeZS(address link,address oracle,uint256 _power_in,uint256 _power_out) onlyOwner {
+         ZS zs = zss[link];
+         zs.oracle=oracle;
          zs.time=now;
-         zss[stromkonto]=zs;
+         zs.power_in=_power_in;
+         zs.power_out=_power_out;
+         zss[link]=zs;
+        
     }
+
     
-    function reclear(address stromkonto_or_oracle,uint256 _min_time,uint256 _min_power,uint256 _max_time, uint256 _max_power,bool clearance) onlyOwner {
-           clearances[stromkonto_or_oracle]=ClearanceLimits(_min_time,_min_power,_max_time,_max_power,msg.sender,clearance);
-           recleared(stromkonto_or_oracle);
-    }
-    
-    function ping(address stromkonto,uint256 delta_time,uint256 delta_power) {
-        ClearanceLimits memory limits = _retrieveClearance(stromkonto);
+    function ping(address link,uint256 delta_time,uint256 delta_power_in,uint256 delta_power_out) {
+        ClearanceLimits  limits = defaultLimits;
         if(!limits.valid) {  throw; }
-        if(limits.min_power>delta_power) throw;
-        if(limits.max_power<delta_power) throw;
+        if((limits.min_power>delta_power_in)&&(limits.min_power>delta_power_out) ) throw;
+        if((limits.max_power<delta_power_in)&&(limits.max_power<delta_power_out)) throw;
         if(limits.min_time>delta_time) throw;
         if(limits.max_time<delta_time) throw;
         
-        ZS zs = zss[stromkonto];
+        ZS zs = zss[link];
         
         if(zs.time==0) {
             zs.oracle=msg.sender;
             zs.time=now;
+        } else {
+            if((zs.oracle!=msg.sender) &&(zs.oracle!=owner)) throw;
         }
         
         zs.time+=delta_time;
-        zs.power+=delta_power;
-        zss[stromkonto]=zs;
+        zs.power_in+=delta_power_in;
+        zs.power_out+=delta_power_out;
+        zss[link]=zs;
+        pinged(link,zs.time,zs.power_in,zs.power_out);
     }
 }

@@ -1,5 +1,5 @@
 var request = require('request');
-var OAuth = require('mashape-oauth').OAuth;
+var OAuth = require('./mashape-oauth-4dgy/index.js').OAuth;
 
 var Discovergy={};
 
@@ -8,18 +8,11 @@ module.exports = function (token,vm) {
 	this.meters={};
 	this.token=token;
 	this.oauth=this.vm.storage.getItemSync(token);	
-	this.oa=new OAuth(this.oauth.oauth_options,function(ox) {console.log("OX Init",ox);});
+	if(typeof this.oauth!="undefined") {
+		this.oa=new OAuth(this.oauth.oauth_options,function(ox) {console.log("OX Init",ox);});
+	}
 	var oauth = this.oauth;
-		this.CreateAuth = function(email,password) {
-			var vm=this.vm;
-			var p1 = new Promise(function(resolve, reject) { 
-						Discovergy.getOAuthVerifier(email,password).then(function(o) {					
-						vm.storage.setItemSync(o.oauth_token,o);
-						resolve(o);					
-						});				
-			});
-			return p1;
-		}
+	
 
 
 	this.getMeters=function(cb) {	
@@ -35,12 +28,25 @@ module.exports = function (token,vm) {
 	this.getMeterReading=function(meterid,cb) {
 		this.oauth.url="https://api.discovergy.com/public/v1/last_reading?meterId="+meterid+"&";
 		this.oauth.parameters={meterId:meterid};	
-		
+
 		this.oa.get(this.oauth, function(a,b) { 
+							
 					//console.log(a,b);
-					cb(JSON.parse(b));
+					var obj=JSON.parse(b);
+					ot=""+obj.time;
+					obj.time=ot.substr(0,ot.length-3);					
+					cb(obj);
 		});	
-	}
+	};
+	this.CreateAuth = function(vm,email,password) {			
+			var p1 = new Promise(function(resolve, reject) { 
+						Discovergy.getOAuthVerifier(email,password).then(function(o) {					
+						vm.storage.setItemSync(o.oauth_token,o);
+						resolve(o);					
+						});				
+			});
+			return p1;
+	};
 }
 
 Discovergy.getConsumerToken=function() {
@@ -56,15 +62,17 @@ Discovergy.getConsumerToken=function() {
 				};   
 
 				request(reqoptions, function (error, response, body) {
-					console.log(JSON.parse(body));
+					//console.log(JSON.parse(body));
 					resolve(JSON.parse(body));				
 				});
 		});
 		return p1;
 };
 
+	
 Discovergy.getOAuthVerifier=function(email,password) {
 		return Discovergy.getConsumerToken().then(function(tokens) {
+		
 			var p1 = new Promise(function(resolve, reject) { 
 				var options = {
 					requestUrl:'https://api.discovergy.com/public/v1/oauth1/request_token',
@@ -76,10 +84,11 @@ Discovergy.getOAuthVerifier=function(email,password) {
 					version:"1.0",
 					clientOptions:{accessTokenHttpMethod:"POST",requestTokenHttpMethod:"POST"}
 				};
-
-				oa = new OAuth(options, function(o) {console.log(o);});
 				
-				oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
+				oa = new OAuth(options, function(o) {}); // new OAuth
+								
+								
+				oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){				
 					 if(error) {
 							console.log('error');
 							console.log(error);
@@ -115,6 +124,7 @@ Discovergy.getOAuthVerifier=function(email,password) {
 						});			
 					  }
 				});
+				
 			});
 			return p1;
 		});

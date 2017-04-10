@@ -5,3 +5,4 @@ key.ring/
 orbit-db/
 orbit/
 test.js
+.node-persist/

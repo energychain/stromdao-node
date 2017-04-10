@@ -1,0 +1,93 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "mashape-oauth",
+        "scope": null,
+        "escapedName": "mashape-oauth",
+        "name": "mashape-oauth",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "E:\\cloud\\Dropbox\\Development\\ongit\\stromdao-node\\oracles\\discovergy"
+    ]
+  ],
+  "_from": "mashape-oauth@latest",
+  "_id": "mashape-oauth@0.1.71",
+  "_inCache": true,
+  "_location": "/mashape-oauth",
+  "_npmUser": {
+    "name": "nijikokun",
+    "email": "nijikokun@gmail.com"
+  },
+  "_npmVersion": "1.3.5",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "mashape-oauth",
+    "scope": null,
+    "escapedName": "mashape-oauth",
+    "name": "mashape-oauth",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/mashape-oauth/-/mashape-oauth-0.1.71.tgz",
+  "_shasum": "1db399aea069d42a716d94b64962cc36d20a2427",
+  "_shrinkwrap": null,
+  "_spec": "mashape-oauth",
+  "_where": "E:\\cloud\\Dropbox\\Development\\ongit\\stromdao-node\\oracles\\discovergy",
+  "author": {
+    "name": "Nijiko Yonskai"
+  },
+  "dependencies": {},
+  "description": "Library for handling OAuth (1.0a, Echo, XAuth, and 2.0) Requests and Responses",
+  "devDependencies": {
+    "mocha": "~1.8.2"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dist": {
+    "shasum": "1db399aea069d42a716d94b64962cc36d20a2427",
+    "tarball": "https://registry.npmjs.org/mashape-oauth/-/mashape-oauth-0.1.71.tgz"
+  },
+  "keywords": [
+    "authentication",
+    "oauth",
+    "http",
+    "request",
+    "response",
+    "hmac",
+    "sha1",
+    "plaintext",
+    "rsa",
+    "1.0a",
+    "2.0",
+    "echo",
+    "xauth",
+    "2-legged",
+    "3-legged",
+    "two-legged",
+    "three-legged"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "nijikokun",
+      "email": "nijikokun@gmail.com"
+    }
+  ],
+  "name": "mashape-oauth",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": "",
+  "scripts": {
+    "test": "mocha"
+  },
+  "version": "0.1.71"
+}

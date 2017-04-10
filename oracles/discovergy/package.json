@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/energychain/stromdao-discovergy#readme",
   "dependencies": {
+    "ethers": "^2.0.0",
     "ethers-wallet": "^1.0.11",
     "express": "^4.15.2",
     "ipfs-api": "^14.0.0",
