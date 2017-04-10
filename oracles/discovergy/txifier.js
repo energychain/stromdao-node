@@ -87,8 +87,7 @@ module.exports = function (link_definition,vm) {
 							var contract = new ethers.Contract(vm.deployment.gwalink,JSON.parse(fs.readFileSync("../../smart_contracts/gwalink.abi")), wallet);
 							
 							var link = txifier.stromkonto;	
-							
-							console.log(vm.deployment.gwalink);				
+																
 							contract.zss(""+link+"").then(function(state) {	
 																
 										delta.bc = {};

@@ -13,7 +13,8 @@ var bootstrap = new Bootstrap(function() {
 			txifier.zsg(
 			
 					function(o,hash) {
-						console.log("SmartMeterOracle:",o.address,o.bc,o.gwatx,hash);						
+						console.log("SmartMeterOracle:",o.address,o.bc,hash);	
+						process.exit(0);
 					}
 			
 			);
