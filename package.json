@@ -24,6 +24,8 @@
   "homepage": "https://github.com/energychain/stromdao-node#readme",
   "dependencies": {
     "express": "^4.15.2",
+    "hapi": "^16.1.1",
+    "stromdao-discovergy": "0.0.4",
     "web3": "^0.18.2"
   }
 }

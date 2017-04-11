@@ -259,6 +259,9 @@ module.exports = {
 				}				
 				
 		});
+		app.use('/oracle',function(req,res) {	
+			
+		});
 		app.use('/tx/bucket/retrieve',function(req,res) {
 			if((typeof req.dapp_from == "undefined")||(req.dapp_from=="0x0")) {
 				res.json({ status: 'failed',cause:'No Auth',challenge:nonce});

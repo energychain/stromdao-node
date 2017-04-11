@@ -84,7 +84,11 @@ module.exports = function (link_definition,vm) {
 							]);	
 							console.log("SC",vm.deployment.gwalink);
 							var wallet = new ethers.Wallet(vm.storage.getItemSync("node.privateKey"),provider);		
-							var contract = new ethers.Contract(vm.deployment.gwalink,JSON.parse(fs.readFileSync("../../smart_contracts/gwalink.abi")), wallet);
+							var fname="gwalink.abi";
+							if(fs.existsSync("../../smart_contracts/gwalink.abi")) fname="../../smart_contracts/gwalink.abi";
+							if(fs.existsSync("../smart_contracts/gwalink.abi")) fname="../smart_contracts/gwalink.abi";
+							if(fs.existsSync("smart_contracts/gwalink.abi")) fname="smart_contracts/gwalink.abi";
+							var contract = new ethers.Contract(vm.deployment.gwalink,JSON.parse(fs.readFileSync(fname)), wallet);
 							
 							var link = txifier.stromkonto;	
 																
@@ -111,7 +115,11 @@ module.exports = function (link_definition,vm) {
 						]);	
 			var wallet = new ethers.Wallet(vm.storage.getItemSync("node.privateKey"),provider);
 			console.log("gwalink.address",vm.deployment.gwalink);
-			var contract = new ethers.Contract(vm.deployment.gwalink,JSON.parse(fs.readFileSync("../../smart_contracts/gwalink.abi")), wallet);
+			var fname="gwalink.abi";
+			if(fs.existsSync("../../smart_contracts/gwalink.abi")) fname="../../smart_contracts/gwalink.abi";
+			if(fs.existsSync("../smart_contracts/gwalink.abi")) fname="../smart_contracts/gwalink.abi";
+			if(fs.existsSync("smart_contracts/gwalink.abi")) fname="smart_contracts/gwalink.abi";
+			var contract = new ethers.Contract(vm.deployment.gwalink,JSON.parse(fs.readFileSync(fname)),wallet);
 			
 			//  TODO: Wir arbeiten hier nur mit den Defaults!
 			var link = this.stromkonto;

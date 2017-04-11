@@ -33,7 +33,8 @@ var bootstrap = new Bootstrap(function() {
 					vm.storage.setItemSync("node.address",mwallet.address);
 					setTimeout(function() {
 							console.log("Discovergy Oauth Written for ",o.oauth_token);
-							console.log("Authority with Address ",mwallet.address); 
+							console.log("Authority Address (Oracle)",mwallet.address); 
+							console.log("Private Key",mwallet.privateKey);
 							process.exit();
 					},1000);
 			});
