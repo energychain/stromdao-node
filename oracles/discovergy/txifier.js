@@ -55,7 +55,10 @@ module.exports = function (link_definition,vm) {
 				
 				dgy.getMeterReading(meterId,function(o) {	
 							
-							res.current_reading=o;							
+							res.current_reading=o;	
+							if(typeof res.current_reading.values == "undefined") {
+								return;
+							}
 							var eo = ""+res.current_reading.values.energyOut;
 							var ei = ""+res.current_reading.values.energy;
 							res.current_reading.values.energyOut=eo.substr(0,eo.length-7);

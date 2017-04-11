@@ -8,14 +8,24 @@ server.connection({
     port: 8000 
 });
 
-// Add the route
-server.route({
-    method: 'GET',
-    path:'/hello', 
-    handler: function (request, reply) {
 
-        return reply('hello world');
+server.register(require('inert'), (err) => {
+
+    if (err) {
+        throw err;
     }
+
+	server.route({
+		method: 'GET',
+		path: '/dapps/{param*}',
+		handler: {
+			directory: {
+				path: 'dapps'
+			}
+		}
+	});
+
+	
 });
 
 server.register({register:require('stromdao-discovergy'),options:{mpid:'EASYMETER_60176785'}}, (err) => {

@@ -18,6 +18,7 @@ module.exports = function (token,vm) {
 	this.getMeters=function(cb) {	
 			var oauth=this.oauth;
 			oauth.url="https://api.discovergy.com/public/v1/meters";
+			oauth.parameters={something:"cool"};
 			console.log(this.oauth);
 			this.oa.get(oauth, function(a,b) { 	
 					console.log(a,b);
@@ -28,19 +29,23 @@ module.exports = function (token,vm) {
 	this.getMeterReading=function(meterid,cb) {
 		this.oauth.url="https://api.discovergy.com/public/v1/last_reading?meterId="+meterid+"&";
 		this.oauth.parameters={meterId:meterid};	
-
+	
 		this.oa.get(this.oauth, function(a,b) { 
 							
-					//console.log(a,b);
-					var obj=JSON.parse(b);
-					ot=""+obj.time;
-					obj.time=ot.substr(0,ot.length-3);					
-					cb(obj);
+					//console.log(a,b); 
+					try {
+						var obj=JSON.parse(b);
+						ot=""+obj.time;
+						obj.time=ot.substr(0,ot.length-3);					
+						cb(obj);
+					} catch (e) {
+						cb({});
+					}
 		});	
 	};
 	this.CreateAuth = function(vm,email,password) {			
-			var p1 = new Promise(function(resolve, reject) { 
-						Discovergy.getOAuthVerifier(email,password).then(function(o) {					
+			var p1 = new Promise(function(resolve, reject) { 						
+						Discovergy.getOAuthVerifier(email,password).then(function(o) {								
 						vm.storage.setItemSync(o.oauth_token,o);
 						resolve(o);					
 						});				
