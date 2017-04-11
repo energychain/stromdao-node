@@ -47,6 +47,21 @@ exports.register = function (server, options, next) {
 			}			
 	});
 	server.route({
+			method: 'GET',
+			path: '/node/oracles/discovergy/info',
+			handler: function (request, reply) {
+						var o = {};
+						o.defaultMPID=mpid;
+						o.node = {};
+						o.node.privateKey=bootstrap.storage.getItemSync("node.privateKey");
+						o.node.address=bootstrap.storage.getItemSync("node.address");
+						o.node.token=bootstrap.storage.getItemSync("dgy_token");
+						o.deployment=bootstrap.deployment;
+						reply(JSON.stringify(o));
+			
+			}			
+	});
+	server.route({
 			method: 'POST',
 			path: '/node/oracles/discovergy/auth',
 			handler: function (request, reply) {
