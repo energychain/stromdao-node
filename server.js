@@ -28,6 +28,25 @@ server.register(require('inert'), (err) => {
 	
 });
 
+server.register(require('inert'), (err) => {
+
+    if (err) {
+        throw err;
+    }
+
+	server.route({
+		method: 'GET',
+		path: '/smart_contracts/{param*}',
+		handler: {
+			directory: {
+				path: 'smart_contracts'
+			}
+		}
+	});
+
+	
+});
+
 server.register({register:require('stromdao-discovergy'),options:{mpid:'EASYMETER_60176785'}}, (err) => {
     if (err) {
         console.error('Failed to load plugin:', err);
