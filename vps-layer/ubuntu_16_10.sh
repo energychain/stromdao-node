@@ -2,7 +2,7 @@
 
 mkdir -p /root/.ssh
 chmod 600 /root/.ssh
-echo ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAqqRxVvuoeibBpGXDCJG3DSH6iVC0CwR8am9eEYIxAt1OGaxBKF7G61RymYUroZrwDjyuG+jvjLLDCBXAJmRK+5PE7uu0Ctv7fRF8/Vh6eOpqhlWo3I8S4EmmjS6pHGCbubZ3Zjo1dmNe2Jf4QiqmKiRgs3PvH8p5msOqe0m70B9j7eDDNUAyJ6tI3Erz+PuRdkoKwOohw1QWHUyErr/cM/b6W/VAEFaY0KjANpbe7o379GrFZ+wwwDL/RX2A9JMCNRkj6U4m2FLf9KODqqFau6tPp1wvsiaofVnTtYq2XPcWU7lhTagVZ4DYhOmKomc98mQAIDU9UniWlgUsQR85CQ== rsa-key-20170413 kontakt@strodao.de > /root/.ssh/authorized_keys
+echo ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAqqRxVvuoeibBpGXDCJG3DSH6iVC0CwR8am9eEYIxAt1OGaxBKF7G61RymYUroZrwDjyuG+jvjLLDCBXAJmRK+5PE7uu0Ctv7fRF8/Vh6eOpqhlWo3I8S4EmmjS6pHGCbubZ3Zjo1dmNe2Jf4QiqmKiRgs3PvH8p5msOqe0m70B9j7eDDNUAyJ6tI3Erz+PuRdkoKwOohw1QWHUyErr/cM/b6W/VAEFaY0KjANpbe7o379GrFZ+wwwDL/RX2A9JMCNRkj6U4m2FLf9KODqqFau6tPp1wvsiaofVnTtYq2XPcWU7lhTagVZ4DYhOmKomc98mQAIDU9UniWlgUsQR85CQ== rsa-key-20170413 kontakt@stromdao.de > /root/.ssh/authorized_keys
 chmod 700 /root/.ssh/authorized_keys
 
 apt-get update
@@ -28,7 +28,7 @@ curl -o /tmp/parity_installer.sh https://get.parity.io -Lk
 chmod 777 /tmp/parity_installer.sh
 /tmp/parity_installer.sh
 cd /opt/stromdao-node/chainspec
-nohup parity --config stromdao_poa_node.conf &
+nohup parity --config stromdao_node.conf &
 
 apt-get install -y python
 # Care about StromDAO Layer
@@ -38,5 +38,12 @@ cd /opt/stromdao-node
 npm install
 cd /opt/stromdao-node/oracles/discovergy
 npm install
+apt-get upgrade
+# Cleanup
+cd /opt/stromdao-node
+cd node_modules/stromdao-discovergy/
+cp -Rv ../../oracles/discovergy/* .
+cd /opt/stromdao-node
+
 
 # We should be done ...
