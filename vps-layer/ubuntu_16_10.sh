@@ -30,7 +30,7 @@ chmod 777 /tmp/parity_installer.sh
 cd /opt/stromdao-node/chainspec
 nohup parity --config stromdao_poa_node.conf &
 
-apt-get install python
+apt-get install -y python
 # Care about StromDAO Layer
 cd /opt
 git clone https://github.com/energychain/stromdao-node.git
