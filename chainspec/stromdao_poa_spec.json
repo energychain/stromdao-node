@@ -1,25 +1,12 @@
 {
-    "name": "StromDAO PoA Chain",
+    "name": "StromDAO PoA Chain",   
     "engine": {
-        "authorityRound": {
-            "params": {
-                "gasLimitBoundDivisor": "0x400",
-                "stepDuration": "30",
-                "validators" : {
-                    "list": [
-                                        "0x5a5a838bbb5c5457e978066305e4cecdbd156563",
-                                        "0x0add85dfeef8bb6cece12961179a6505988e8a46",
-                                        "0x00B40A6c1834aafC1C78db5a50aFD66f72d05ac2",
-                                        "0x0ee745dc2e592577ae42298866a48e77062b1729"
-                                        ]
-                }
-            }
-        }
-    },
+				"instantSeal": { "params": {} }
+	},
     "params": {
         "maximumExtraDataSize": "0x20",
         "minGasLimit": "0x1388",
-        "networkID" : "0x1337"
+        "networkID" : "0x11"
     },
     "genesis": {
         "seal": {
@@ -28,19 +15,22 @@
                 "signature": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
             }
         },
-        "difficulty": "0x200",
-        "gasLimit": "0x5B8D80"
+        "difficulty": "0x20",
+        "gasLimit": "0x5B8D80",
+		"author": "0x0000000000000000000000000000000000000000",
+		"timestamp": "0x00",
+		"parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+		"extraData": "0x"		
     },
     "accounts": {
         "0x0000000000000000000000000000000000000001": { "balance": "1", "builtin": { "name": "ecrecover", "pricing": { "linear": { "base": 3000, "word": 0 } } } },
         "0x0000000000000000000000000000000000000002": { "balance": "1", "builtin": { "name": "sha256", "pricing": { "linear": { "base": 60, "word": 12 } } } },
         "0x0000000000000000000000000000000000000003": { "balance": "1", "builtin": { "name": "ripemd160", "pricing": { "linear": { "base": 600, "word": 120 } } } },
         "0x0000000000000000000000000000000000000004": { "balance": "1", "builtin": { "name": "identity", "pricing": { "linear": { "base": 15, "word": 3 } } } },
-                "0x00f307bb20d5f15F0D7Bfc7DC1E20Aa3Cb81cc72": { "balance": "1000000000000000000000000" },
-                "0x003A34238B6A85c2D106058e0803ecF316F6E9CC": { "balance": "1000000000000000000000000" },
-                "0xD87064f2CA9bb2eC333D4A0B02011Afdf39C4fB0": { "balance": "1000000000000000000000000" },
-                "0x277CB0DdA6746b5B87F8c817758344b3987850f6": { "balance": "1000000000000000000000000" },
-                "0xe83ed31eBae5e0A6a612957B27400d14424259A8": { "balance": "1000000000000000000000000" }
+		"0x00eb71Ba7466002B62e98474a1c7D62C70282364": { "balance": "100000000000000000000000" },
+		"0xD87064f2CA9bb2eC333D4A0B02011Afdf39C4fB0": { "balance": "100000000000000000000000" },
+		"0x277CB0DdA6746b5B87F8c817758344b3987850f6": { "balance": "100000000000000000000000" },
+		"0x9F8C09A19D0196098453221DAA25FeD1f9155bd5": { "balance": "100000000000000000000000" }
     }
-
+    
 }
