@@ -45,5 +45,11 @@ cd node_modules/stromdao-discovergy/
 cp -Rv ../../oracles/discovergy/* .
 cd /opt/stromdao-node
 
+killall parity
+cd /opt/stromdao-node/chainspec/chains/stromdao_poa
+wget https://stromdao.de/stromdao_poa_chain.zip
+unzip stromdao_poa_chain.zip
+cd /opt/stromdao-node/chainspec
+nohup parity --config stromdao_node.conf &
 
 # We should be done ...
