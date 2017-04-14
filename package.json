@@ -1,6 +1,6 @@
 {
   "name": "stromdao-node",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Fullstack Node with delegation to handle decentral browser clients in a DAO for the energy market",
   "main": "index.js",
   "scripts": {

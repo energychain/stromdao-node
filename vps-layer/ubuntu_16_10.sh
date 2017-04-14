@@ -54,4 +54,5 @@ unzip stromdao_poa_chain.zip
 cd /opt/stromdao-node/chainspec
 nohup parity --config stromdao_node.conf &
 
+echo "Als nächstes bitte alles einmal testen!"
 # We should be done ...
