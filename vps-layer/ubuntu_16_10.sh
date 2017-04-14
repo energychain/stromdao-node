@@ -44,6 +44,8 @@ cd /opt/stromdao-node
 cd node_modules/stromdao-discovergy/
 cp -Rv ../../oracles/discovergy/* .
 cd /opt/stromdao-node
+rm -Rf /opt/stromdao-node/oracles/discovergy
+ln -s /opt/stromdao-node/node_modules/stromdao-discovergy /opt/stromdao-node/oracles/discovergy
 
 killall parity
 cd /opt/stromdao-node/chainspec/chains/stromdao_poa
