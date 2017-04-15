@@ -7,7 +7,7 @@ function renderNodeBalance(element) {
 }
 
 function renderOracleInfo(element) {
-	$.getJSON("http://localhost:8000/node/oracles/discovergy/info",function(d) {
+	$.getJSON("/node/oracles/discovergy/info",function(d) {
 			node.info = d;
 			var html="<table class='table table-condensed'>";
 			 html+="<tr><td>Default MPID</td><td>"+d.defaultMPID+"</td></tr>";
@@ -35,7 +35,7 @@ setTimeout(function() {
 	console.log(".");
 		var waitForWeb3 = setInterval(function() {
 			if(typeof Web3 != "undefined") {
-				web3 = new Web3(web3.currentProvider);				
+				web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8081/rpc"));				
 				clearInterval(waitForWeb3);
 				var waitForCoinbase = setInterval(function() {
 					if(web3.eth.coinbase!="0x0000000000000000000000000000000000000000") {					

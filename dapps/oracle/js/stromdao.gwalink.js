@@ -7,6 +7,7 @@
 function helperMapOutputToAbi(contract_object,function_name,output) {
 	var result = {};
 	result.orig=output;
+	console.log(contract_object,output,function_name);
 	for(var i=0;i<contract_object.abi.length;i++) {
 			if(contract_object.abi[i].name==function_name) {
 					for(var j=0;j<contract_object.abi[i].outputs.length;j++) {						
@@ -18,6 +19,7 @@ function helperMapOutputToAbi(contract_object,function_name,output) {
 }
 
 function renderOutputTable(element,output) {
+	
 	var html="<table class='table table-condensed'>";
 	html+="<tr><th>Key</th><th>Value</th></tr>";
 	for (var k in output){
@@ -41,7 +43,8 @@ function getLastReading(gwalink_address,meterpoint_address) {
 			$.getJSON("/smart_contracts/gwalink.abi",function(abiArray) {							
 							var gwalink = web3.eth.contract(abiArray);							
 							var instance = gwalink.at(gwalink_address);
-							instance.zss(meterpoint_address,function(d,t) {								
+							instance.zss(meterpoint_address,function(d,t) {	
+								console.log(d,t);
 								resolve(helperMapOutputToAbi(gwalink,'zss',t));
 							});
 			});			
