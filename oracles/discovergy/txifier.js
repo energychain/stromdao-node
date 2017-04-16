@@ -149,7 +149,7 @@ module.exports = function (link_definition,vm) {
 										archiveq.add(delta).then(function(hash) {
 													// Provide PubSub Feedback
 													
-													ipfs.pubsub.publish('stromdao.link',new Buffer(JSON.stringify({address:delta.address,hash:hash})),function(l) {  });
+													ipfs.pubsub.publish('stromdao.link',new Buffer(JSON.stringify({gwa:vm.deployment.gwalink,address:delta.address,hash:hash})),function(l) {  });
 													
 													cb(delta,hash);
 										});		
