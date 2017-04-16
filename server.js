@@ -106,7 +106,7 @@ stromdaonodes.forEach((n) => {
 
 const receiveMsg = (msg) => {
 	// Todo Implement Broadcast handling
-	console.log(msg);
+	console.log(msg.data.toString());
   //var message=JSON.parse(msg.data.toString());
   //console.log(message);
 }

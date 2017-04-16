@@ -88,9 +88,11 @@ module.exports = function (link_definition,vm) {
 							console.log("SC",vm.deployment.gwalink);
 							var wallet = new ethers.Wallet(vm.storage.getItemSync("node.privateKey"),provider);		
 							var fname="gwalink.abi";
+							
 							if(fs.existsSync("../../smart_contracts/gwalink.abi")) fname="../../smart_contracts/gwalink.abi";
 							if(fs.existsSync("../smart_contracts/gwalink.abi")) fname="../smart_contracts/gwalink.abi";
 							if(fs.existsSync("smart_contracts/gwalink.abi")) fname="smart_contracts/gwalink.abi";
+							
 							var contract = new ethers.Contract(vm.deployment.gwalink,JSON.parse(fs.readFileSync(fname)), wallet);
 							
 							var link = txifier.stromkonto;	
@@ -149,9 +151,12 @@ module.exports = function (link_definition,vm) {
 										archiveq.add(delta).then(function(hash) {
 													// Provide PubSub Feedback
 													
-													ipfs.pubsub.publish('stromdao.link',new Buffer(JSON.stringify({gwa:vm.deployment.gwalink,address:delta.address,hash:hash})),function(l) {  });
+													ipfs.pubsub.publish('stromdao.link',new Buffer(JSON.stringify({gwa:vm.deployment.gwalink,address:delta.address,hash:hash})),function(l) {  
+														
+													cb(delta,hash);	
+													});
 													
-													cb(delta,hash);
+													
 										});		
 									} else {
 										console.log("Clearance Error",e);
@@ -163,9 +168,13 @@ module.exports = function (link_definition,vm) {
 							console.log(contract);
 							try {
 							contract.changeZS(link,wallet.address,delta.bc.power_in,delta.bc.power_out).then(function(t,e) {
-								ipfs.pubsub.publish('stromdao.link',new Buffer(JSON.stringify({gwa:vm.deployment.gwalink,address:delta.address})),function(l) { console.log(l); });
-								console.log("-> ReSyncZS",link,wallet.address,delta.bc.power_in,delta.bc.power_out);
-								cb(delta,"");	
+								ipfs.pubsub.publish('stromdao.link',new Buffer(JSON.stringify({gwa:vm.deployment.gwalink,address:delta.address})),function(l) { console.log("L",l); 
+									
+									console.log("-> ReSyncZS",link,wallet.address,delta.bc.power_in,delta.bc.power_out);
+									cb(delta,"");		
+									
+								});
+								
 								
 							},function(err) {console.log("ERR",err)});
 							} catch(e) {
