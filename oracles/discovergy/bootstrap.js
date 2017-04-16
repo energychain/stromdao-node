@@ -19,7 +19,7 @@ module.exports = function (callback) {
 		
 		stromdaonodes.forEach((n) => {
 			console.log("Connecting",n);
-			ipfs.swarm.connect(n.ipfs);	
+			this.ipfs.swarm.connect(n.ipfs);	
 		});
 		this.orbitdb = new OrbitDB(this.ipfs);
 		this.config = this.orbitdb.kvstore("config");
