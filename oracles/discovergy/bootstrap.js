@@ -11,6 +11,16 @@ module.exports = function (callback) {
 		this.storage.initSync();
 		
 		this.ipfs= ipfsAPI('localhost', '5001', {protocol: 'http'});
+		var stromdaonodes = [
+		    { ipfs:'/ip4/45.32.155.49/tcp/4001/ipfs/QmYdn8trPQMRZEURK3BRrwh2kSMrb6r6xMoFr1AC1hRmNG',
+			  node:'45.32.155.49:3000' 
+			}
+		];
+		
+		stromdaonodes.forEach((n) => {
+			console.log("Connecting",n);
+			ipfs.swarm.connect(n.ipfs);	
+		});
 		this.orbitdb = new OrbitDB(this.ipfs);
 		this.config = this.orbitdb.kvstore("config");
 		this.config.load();
