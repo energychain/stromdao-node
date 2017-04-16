@@ -58,3 +58,30 @@ $('#zss_gwalink_call').click(function() {
 			renderOutputTable("#zss_output",output);			
 		});
 });
+
+
+function updateLinkList() {
+	$.getJSON("/discovered/gwalinks",function(d) {
+	   var html="";
+	   html+="<table class='table table-striped'>";
+	   $.each(d, function( index, value ) {
+	   		var gwalink_address = value.gwalink;
+	   		$.each(value.addresses,function(meter,meta) {
+	   				if(typeof meta.updated !="undefined") {
+	   				html+="<tr><td>"+gwalink_address+"</td><td>"+meter+"</td><td>"+new Date(meta.updated).toLocaleString()+"</td><td><button class='btn btn-default btn-getReading' data-gwalink='"+gwalink_address+"' data-meter='"+meter+"'>abrufen</button></td></tr>";	
+	   				}
+	   		});
+	   });
+	   html+="</table>";
+	   $('.gwalink_list').html(html);
+	   $('.btn-getReading').click(function(e) {
+			
+			getLastReading($(e.currentTarget).attr('data-gwalink'),$(e.currentTarget).attr('data-meter')).then(function(output) {
+				renderOutputTable("#zss_output",output);			
+			});
+		});
+	});
+
+}
+
+updateLinkList();

@@ -4,7 +4,7 @@
   "description": "Fullstack Node with delegation to handle decentral browser clients in a DAO for the energy market",
   "main": "index.js",
   "scripts": {
-    "prestart": "ipfs daemon --enable-pubsub-experiment & sleep 2",
+    "prestart": "ipfs daemon --enable-pubsub-experiment & sleep 4",
     "test": "node_modules/.bin/mocha --harmony -w"
   },
   "repository": {
