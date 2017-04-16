@@ -13,7 +13,15 @@ module.exports = function (callback) {
 		this.ipfs= ipfsAPI('localhost', '5001', {protocol: 'http'});
 		var stromdaonodes = [
 		    { ipfs:'/ip4/45.32.155.49/tcp/4001/ipfs/QmYdn8trPQMRZEURK3BRrwh2kSMrb6r6xMoFr1AC1hRmNG',
-			  node:'45.32.155.49:3000' 
+			  node:'45.32.155.49:8081' 
+			},
+			{
+				ipfs:'/ip4/108.61.210.201/tcp/4001',
+				node:'108.61.210.201:8081'
+			},
+			{
+				ipfs:'/ip4/104.199.52.182/tcp/4001',
+				node:'/ip4/104.199.52.182/tcp/4001'
 			}
 		];
 		
