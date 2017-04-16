@@ -168,7 +168,7 @@ module.exports = function (link_definition,vm) {
 							console.log(contract);
 							try {
 							contract.changeZS(link,wallet.address,delta.bc.power_in,delta.bc.power_out).then(function(t,e) {
-								ipfs.pubsub.publish('stromdao.link',new Buffer(JSON.stringify({{oracle:wallet.addres,gwa:vm.deployment.gwalink,address:delta.address})),function(l) { console.log("L",l); 
+								ipfs.pubsub.publish('stromdao.link',new Buffer(JSON.stringify({oracle:wallet.addres,gwa:vm.deployment.gwalink,address:delta.address})),function(l) { console.log("L",l); 
 									
 									console.log("-> ReSyncZS",link,wallet.address,delta.bc.power_in,delta.bc.power_out);
 									cb(delta,"");		
