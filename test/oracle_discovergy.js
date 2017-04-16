@@ -11,8 +11,6 @@ describe('Bootstrap', function() {
                 assert.ok(typeof bootstrap.ipfs != "undefined");
                 assert.ok(typeof bootstrap.storage != "undefined");
                 assert.ok(typeof bootstrap.config != "undefined");
-                
-    		
     });
      
     });
