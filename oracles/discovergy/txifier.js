@@ -162,8 +162,8 @@ module.exports = function (link_definition,vm) {
 						} else {	
 							console.log(contract);
 							try {
-							console.log("TODO: Why is it not working on Linux?");	
 							contract.changeZS(link,wallet.address,delta.bc.power_in,delta.bc.power_out).then(function(t,e) {
+								ipfs.pubsub.publish('stromdao.link',new Buffer(JSON.stringify({gwa:vm.deployment.gwalink,address:delta.address})),function(l) { console.log(l); });
 								console.log("-> ReSyncZS",link,wallet.address,delta.bc.power_in,delta.bc.power_out);
 								cb(delta,"");	
 								

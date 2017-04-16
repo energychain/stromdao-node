@@ -1,4 +1,6 @@
 'use strict';
+var ipfsAPI = require('ipfs-api');
+var ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'});
 
 const Hapi = require('hapi');
 // Create a server with a host and port
@@ -89,3 +91,22 @@ server.start((err) => {
     }
     console.log('Server running at:', server.info.uri);
 });
+
+var stromdaonodes = [
+    { ipfs:'/ip4/45.32.155.49/tcp/4001/ipfs/QmYdn8trPQMRZEURK3BRrwh2kSMrb6r6xMoFr1AC1hRmNG',
+	  node:'45.32.155.49:3000' 
+	}
+];
+
+stromdaonodes.forEach((n) => {
+	console.log("Connecting",n);
+	ipfs.swarm.connect(n.ipfs);	
+});
+
+
+const receiveMsg = (msg) => {
+	// Todo Implement Broadcast handling
+  var message=JSON.parse(msg.data.toString());
+  console.log(message);
+}
+ipfs.pubsub.subscribe('stromdao.link', {discover:true}, receiveMsg);
