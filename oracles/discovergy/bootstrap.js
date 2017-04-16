@@ -16,12 +16,8 @@ module.exports = function (callback) {
 			  node:'45.32.155.49:8081' 
 			},
 			{
-				ipfs:'/ip4/108.61.210.201/tcp/4001',
+				ipfs:'/ip4/108.61.210.201/tcp/4001/ipfs/QmZW7WWzGB4EPKBE4B4V8zT1tY54xmTvPZsCK8PyTNWT7i',
 				node:'108.61.210.201:8081'
-			},
-			{
-				ipfs:'/ip4/104.199.52.182/tcp/4001',
-				node:'/ip4/104.199.52.182/tcp/4001'
 			}
 		];
 		
