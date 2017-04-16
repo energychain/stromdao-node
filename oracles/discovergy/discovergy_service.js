@@ -63,6 +63,22 @@ exports.register = function (server, options, next) {
 	});
 	server.route({
 			method: 'POST',
+			path: '/node/set/gwalink',
+			handler: function (request, reply) {
+					console.log("/node/set/gwalink");
+					var vm = bootstrap;
+					vm.storage.setItemSync("gwalink",request.orig.gwalink);
+				},
+			config: {
+				validate: {
+					payload: {
+								gwalink: Joi.string().min(3)								
+						   }
+				}
+			}
+	});
+	server.route({
+			method: 'POST',
 			path: '/node/oracles/discovergy/auth',
 			handler: function (request, reply) {
 				console.log("/node/oracles/discovergy/auth");

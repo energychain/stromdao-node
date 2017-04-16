@@ -38,7 +38,7 @@ module.exports = function (callback) {
 			this.storage.setItemSync("deployment",this.deployment);
 		}
 		this.dgy_token = this.storage.getItemSync("dgy.token");
-		
+
 		this.config.events.on('ready', function() { 
 					
 			callback();
