@@ -106,7 +106,9 @@ stromdaonodes.forEach((n) => {
 
 const receiveMsg = (msg) => {
 	// Todo Implement Broadcast handling
-  var message=JSON.parse(msg.data.toString());
-  console.log(message);
+	console.log(msg);
+  //var message=JSON.parse(msg.data.toString());
+  //console.log(message);
 }
 ipfs.pubsub.subscribe('stromdao.link', {discover:true}, receiveMsg);
+ipfs.pubsub.publish('stromdao.link',new Buffer(JSON.stringify({status:"New Node"})),function(l) { console.log(l); });
