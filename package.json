@@ -1,6 +1,6 @@
 {
   "name": "stromdao-node",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Fullstack Node with delegation to handle decentral browser clients in a DAO for the energy market",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "hapi": "^16.1.1",
     "inert": "^4.2.0",
     "joi": "^10.4.1",
-    "stromdao-discovergy": "0.0.4",
+    "stromdao-discovergy": "^0.0.7",
     "web3": "^0.18.2"
   }
 }
