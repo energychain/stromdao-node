@@ -1,9 +1,10 @@
 {
   "name": "stromdao-node",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Fullstack Node with delegation to handle decentral browser clients in a DAO for the energy market",
   "main": "index.js",
   "scripts": {
+    "prestart": "ipfs daemon --enable-pubsub-experiment & sleep 2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
