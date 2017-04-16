@@ -9,13 +9,16 @@ var ethers = require('ethers');
 var storage = require('node-persist');
 
 if(process.argv.length<4) {
-	console.log("Required node node_auth.js [username] [password]");
+	console.log("Required node node_auth.js [username] [password] ([privateKey])");
 	//console.log(process.argv);
 	process.exit();
 }
 
 var dgy_username=process.argv[2];
 var dgy_password=process.argv[3];
+if(process.argv.length==5) {
+	var privateKey=process.argv[4];
+}
 
 var bootstrap = new Bootstrap(function() {
 	    var vm = bootstrap;
@@ -27,6 +30,8 @@ var bootstrap = new Bootstrap(function() {
 
 			// Now creating ETH Address to use..
 			//console.log("MWA",o);
+			var key=vm.storage.getItemSync("node.privateKey");
+			if(typeof key=="undefined") {
 			mwallet = new ethers.Wallet.fromBrainWallet(o.oauth_token, o.oauth_token_secret).then(function(mwallet) {
 					
 					vm.storage.setItemSync("node.privateKey",mwallet.privateKey);
@@ -38,5 +43,12 @@ var bootstrap = new Bootstrap(function() {
 							process.exit();
 					},1000);
 			});
+			} else {
+				console.log("Discovergy Oauth Written for ",o.oauth_token);
+				console.log("REUSE");
+				console.log("Authority Address (Oracle)",vm.storage.getItemSync("node.address")); 
+				console.log("Private Key",key);
+				process.exit(); 
+			}
 		});		
 });

@@ -17,6 +17,12 @@ module.exports = function (callback) {
 		if(fs.existsSync("smart_contracts/deployment_poa.json")) this.deployment = JSON.parse(fs.readFileSync("smart_contracts/deployment_poa.json")); else
 		if(fs.existsSync("../smart_contracts/deployment_poa.json")) this.deployment = JSON.parse(fs.readFileSync("../smart_contracts/deployment_poa.json")); else
 		if(fs.existsSync("../../smart_contracts/deployment_poa.json")) this.deployment = JSON.parse(fs.readFileSync("../../smart_contracts/deployment_poa.json"));
+		var dep=this.storage.getItemSync("deployment");
+		if(typeof dep!="undefined") {
+			this.deployment=this.storage.getItemSync("deployment");
+		} else {
+			this.storage.setItemSync("deployment",this.deployment);
+		}
 		this.dgy_token = this.storage.getItemSync("dgy.token");
 		
 		this.config.events.on('ready', function() { 
