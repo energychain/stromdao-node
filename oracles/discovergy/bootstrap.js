@@ -8,7 +8,20 @@ const fs = require("fs");
 module.exports = function (callback) {
 			
 		this.storage = require('node-persist');
-		this.storage.initSync();
+		var cwd=process.cwd();
+		
+		var storage_options = {
+			
+		};
+		
+		if(cwd.indexOf('oracles/discovergy')>0) {
+			storage_options.dir = "../../.node-persist/";
+		}
+		if(cwd.indexOf('node_modules/stromdao-discovergy')>0) {
+			storage_options.dir = "../../.node-persist/";
+		}
+		console.log("CWD Storage",storage_options);
+		this.storage.initSync(storage_options);
 		
 		this.ipfs= ipfsAPI('localhost', '5001', {protocol: 'http'});
 		var stromdaonodes = [

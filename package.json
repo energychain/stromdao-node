@@ -38,7 +38,7 @@
     "oauth": "^0.9.15",
     "orbit-db": "^0.17.3",
     "request": "^2.81.0",
-    "stromdao-discovergy": "^0.0.8",
+    "stromdao-discovergy": "^0.0.9",
     "web3": "^0.18.4"
   }
 }
