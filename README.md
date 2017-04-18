@@ -42,6 +42,11 @@ Im Anschluss sollte auf Port 8081 der StromDAO-Node erreichbar sein.
 
 A SmartGrid Node (MeterPoint Operator / Peer2Peer Node) might be easy setup using the VPS-Layer. Simply run according script to bootstrap. (Note: Will setup a public key to manage Node!)
 
+## Troubleshoot
+
+Wrong GWALink ?
+``` node oracles/discovergy/setGWALink.js GWALINK-Address
+
 ## Contributing
 - https://stromdao.de/
 - https://gitter.im/stromdao/Lobby

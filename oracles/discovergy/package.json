@@ -1,6 +1,6 @@
 {
   "name": "stromdao-discovergy",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Discovergy Oracle for ZSG (Zaehlerstandsgang)",
   "main": "discovergy_service.js",
   "scripts": {

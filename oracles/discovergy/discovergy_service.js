@@ -6,10 +6,45 @@ exports.register = function (server, options, next) {
 	var ethers = require('ethers');
 	var storage = require('node-persist');
 	const Joi = require("joi");
+	const fs = require("fs");
 	var mpid = options.mpid;
 	var bootstrap = new Bootstrap(function() {
 												
-			
+	server.route({
+			method: 'GET',
+			path: '/node/gwalink/info',
+			handler: function (request, reply) {
+				var vm=bootstrap;
+				var gwalink=vm.deployment.gwalink;
+				if(typeof request.query.gwalink!="undefined") {
+					gwalink=request.query.gwalink;
+				} 
+				var provider = new ethers.providers.FallbackProvider([
+					new ethers.providers.JsonRpcProvider("http://localhost:8540/")
+				]);	
+				var wallet = new ethers.Wallet(vm.storage.getItemSync("node.privateKey"),provider);
+				console.log("/node/gwalink/info",gwalink);							
+				try {
+					var fname="gwalink.abi";
+					if(fs.existsSync("../../smart_contracts/gwalink.abi")) fname="../../smart_contracts/gwalink.abi";
+					if(fs.existsSync("../smart_contracts/gwalink.abi")) fname="../smart_contracts/gwalink.abi";
+					if(fs.existsSync("smart_contracts/gwalink.abi")) fname="smart_contracts/gwalink.abi";
+					var contract = new ethers.Contract(gwalink,JSON.parse(fs.readFileSync(fname)),wallet);
+					contract.reader_in().then(function (reader_in) {
+							console.log("Reader_in",reader_in);
+							contract.reader_out().then(function (reader_out) {
+								console.log("Reader_out",reader_out);
+								reply(JSON.stringify({gwalink:gwalink,reader_in:reader_in[0],reader_out:reader_out[0]}));
+							});
+					});
+					
+				} catch(e) {
+					console.log(e);
+					reply(JSON.stringify({error:e}));
+				}
+			}	
+	});
+	
 	server.route({
 			method: 'GET',
 			path: '/node/oracles/discovergy/get',
@@ -68,7 +103,6 @@ exports.register = function (server, options, next) {
 					console.log("/node/set/gwalink");
 					var vm = bootstrap;
 					vm.storage.setItemSync("gwalink",request.orig.gwalink);
-					reply(JSON.stringify({gwalink:vm.storage.getItemSync("gwalink")}));
 				},
 			config: {
 				validate: {
@@ -91,7 +125,7 @@ exports.register = function (server, options, next) {
 				dgy.CreateAuth(vm,dgy_username,dgy_password).then(function(o) {		
 					vm.config.set("dgy.token",o.oauth_token);
 					vm.storage.setItemSync("dgy.token",o.oauth_token);	
-							mwallet = new ethers.Wallet.fromBrainWallet(o.oauth_token, o.oauth_token_secret).then(function(mwallet) {
+							var mwallet = new ethers.Wallet.fromBrainWallet(o.oauth_token, o.oauth_token_secret).then(function(mwallet) {
 									
 									vm.storage.setItemSync("node.privateKey",mwallet.privateKey);
 									vm.storage.setItemSync("node.address",mwallet.address);

@@ -7,7 +7,7 @@ pragma solidity ^0.4.10;
  * Lieferanten/Abnehmer Managements in einem HSM oder P2P Markt ohne zentrale
  * Kontrollstelle.
  * 
- * Kontakt V0.1.2: 
+ * Kontakt V0.1.3: 
  * Thorsten Zoerner <thorsten.zoerner(at)stromdao.de)
  * https://stromdao.de/
  */
@@ -85,22 +85,23 @@ contract GWALink is owned {
 
     
     function ping(address link,uint256 delta_time,uint256 delta_power_in,uint256 delta_power_out) {
+        /*
         ClearanceLimits  limits = defaultLimits;
         if(!limits.valid) {  throw; }
         if((limits.min_power>delta_power_in)&&(limits.min_power>delta_power_out) ) throw;
         if((limits.max_power<delta_power_in)&&(limits.max_power<delta_power_out)) throw;
         if(limits.min_time>delta_time) throw;
         if(limits.max_time<delta_time) throw;
-        
+             */
         ZS zs = zss[link];
         
         if(zs.time==0) {
             zs.oracle=msg.sender;
             zs.time=now;
         } else {
-            if((zs.oracle!=msg.sender) &&(zs.oracle!=owner)) throw;
+           // if((zs.oracle!=msg.sender) &&(zs.oracle!=owner)) throw;
         }
-        
+   
         zs.time+=delta_time;
         zs.power_in+=delta_power_in;
         zs.power_out+=delta_power_out;
@@ -108,6 +109,33 @@ contract GWALink is owned {
         pinged(link,zs.time,zs.power_in,zs.power_out);
     }
 }
+
+
+contract StromDAOReading is owned {
+   GWALink public gwalink;
+   
+   mapping(address=>uint256) public readings;
+   event pinged(address link,uint256 time,uint256 total,uint256 delta);
+   uint256 lastReading=0;
+   bool public isPowerIn;
+   
+   function StromDAOReading(GWALink _gwalink,bool _isPowerIn) {
+       gwalink=_gwalink;
+       isPowerIn=_isPowerIn;
+   }
+   function pingDelta(uint256 _delta) {
+       readings[msg.sender]+=_delta;
+       if(isPowerIn)  gwalink.ping(msg.sender,now-lastReading,_delta,0);
+        else  gwalink.ping(msg.sender,now-lastReading,0,_delta);
+       pinged(msg.sender,now,readings[msg.sender],_delta);
+       lastReading=now;
+   }
+   
+   function pingReading(uint256 _reading) {
+      pingDelta(_reading-readings[msg.sender]);
+   }
+}
+
 
 
 contract PrivatePDcontract is owned {
@@ -174,29 +202,4 @@ contract PrivatePDcontract is owned {
         if(!endure) throw;
         endure=false;
     }
-}
-
-contract StromDAOReading is owned {
-   GWALink public gwalink;
-   
-   mapping(address=>uint256) public readings;
-   event pinged(address link,uint256 time,uint256 total,uint256 delta);
-   uint256 lastReading=0;
-   bool public isPowerIn;
-   
-   function StromDAOReading(GWALink _gwalink,bool _isPowerIn) {
-       gwalink=_gwalink;
-       isPowerIn=_isPowerIn;
-   }
-   function pingDelta(uint256 _delta) {
-       readings[msg.sender]+=_delta;
-       if(isPowerIn)  gwalink.ping(msg.sender,now-lastReading,_delta,0);
-        else  gwalink.ping(msg.sender,now-lastReading,0,_delta);
-       pinged(msg.sender,now,readings[msg.sender],_delta);
-       lastReading=now;
-   }
-   
-   function pingReading(uint256 _reading) {
-      pingDelta(_reading-readings[msg.sender]);
-   }
 }
