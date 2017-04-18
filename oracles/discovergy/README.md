@@ -11,3 +11,9 @@ node web3_gwalinkdeploy.js ETH_ADDRESS
 Now try:
 node SmartMeterOracle.js SMARTMETERID
 
+
+# setGWALink.js
+
+Set a GWALink to be used by local node (configuration setting).
+
+node setGWALink.js [GWALink Address]

@@ -31,7 +31,7 @@ var bootstrap = new Bootstrap(function() {
 		
 		
 		var sendPromise = wallet.sendTransaction(deployTransaction).then(function(transaction) {
-						//console.log(transaction);
+						console.log(transaction);
 						var gwalink = ethers.utils.getContractAddress(transaction);
 						var deployment = JSON.parse(fs.readFileSync("../../smart_contracts/deployment_poa.json"));
 						deployment.gwalink=gwalink;

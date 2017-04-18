@@ -68,6 +68,7 @@ exports.register = function (server, options, next) {
 					console.log("/node/set/gwalink");
 					var vm = bootstrap;
 					vm.storage.setItemSync("gwalink",request.orig.gwalink);
+					reply(JSON.stringify({gwalink:vm.storage.getItemSync("gwalink")}));
 				},
 			config: {
 				validate: {

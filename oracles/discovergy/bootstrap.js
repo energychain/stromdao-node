@@ -15,12 +15,12 @@ module.exports = function (callback) {
 		};
 		
 		if(cwd.indexOf('oracles/discovergy')>0) {
-			storage_options.dir = "../../.node-persist/";
+			storage_options.dir = "../../.node-persist/storage/";
 		}
 		if(cwd.indexOf('node_modules/stromdao-discovergy')>0) {
-			storage_options.dir = "../../.node-persist/";
-		}
-		console.log("CWD Storage",storage_options);
+			storage_options.dir = "../../.node-persist/storage/";
+		} 
+		console.log("CWD Storage",storage_options,cwd);
 		this.storage.initSync(storage_options);
 		
 		this.ipfs= ipfsAPI('localhost', '5001', {protocol: 'http'});
@@ -49,6 +49,11 @@ module.exports = function (callback) {
 			this.deployment=this.storage.getItemSync("deployment");
 		} else {
 			this.storage.setItemSync("deployment",this.deployment);
+		}
+		var gwalink = this.storage.getItemSync("gwalink");
+		if(typeof gwalink != "undefined") {
+			this.deployment.gwalink=gwalink;
+			console.log("GWALink",gwalink);
 		}
 		this.dgy_token = this.storage.getItemSync("dgy.token");
 
