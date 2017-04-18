@@ -64,6 +64,7 @@ function updateLinkList() {
 	$.getJSON("/discovered/gwalinks",function(d) {
 	   var html="";
 	   html+="<table class='table table-striped'>";
+	   html+="<tr><th>GWALink</th><th>Meter Point Address</th><th>Updated</th><th>Action</th></tr>";
 	   $.each(d, function( index, value ) {
 	   		var gwalink_address = value.gwalink;
 	   		$.each(value.addresses,function(meter,meta) {
