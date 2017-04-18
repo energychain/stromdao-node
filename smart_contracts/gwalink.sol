@@ -7,8 +7,8 @@ pragma solidity ^0.4.10;
  * Lieferanten/Abnehmer Managements in einem HSM oder P2P Markt ohne zentrale
  * Kontrollstelle.
  * 
- * Kontakt V0.1: 
- * Thorsten Zoerner <thorsten.zoerner@stromdao.de)
+ * Kontakt V0.1.2: 
+ * Thorsten Zoerner <thorsten.zoerner(at)stromdao.de)
  * https://stromdao.de/
  */
 
@@ -32,6 +32,9 @@ contract owned {
 
 contract GWALink is owned {
     uint80 constant None = uint80(0); 
+    
+    StromDAOReading public reader_in;
+    StromDAOReading public reader_out;
     
     // Freigaben für einzelne Nodes
     struct ClearanceLimits {
@@ -57,11 +60,16 @@ contract GWALink is owned {
     ClearanceLimits public defaultLimits = ClearanceLimits(1,1,86400,1000,owner,true);
   
     mapping(address=>ZS) public zss;
+    mapping(address=>address) public readers;
     
     function changeClearance(uint256 _min_time,uint256 _min_power,uint256 _max_time, uint256 _max_power,bool _clearance) onlyOwner {
         defaultLimits = ClearanceLimits(_min_time,_min_power,_max_time,_max_power,msg.sender,_clearance);
     }
     
+    function setNewReaders() onlyOwner {
+        reader_in=new StromDAOReading(this,true); 
+        reader_out=new StromDAOReading(this,false);
+    }
 
     
     function changeZS(address link,address oracle,uint256 _power_in,uint256 _power_out) onlyOwner {
@@ -70,6 +78,7 @@ contract GWALink is owned {
          zs.time=now;
          zs.power_in=_power_in;
          zs.power_out=_power_out;
+         recleared(link);
          zss[link]=zs;
         
     }
@@ -98,4 +107,96 @@ contract GWALink is owned {
         zss[link]=zs;
         pinged(link,zs.time,zs.power_in,zs.power_out);
     }
+}
+
+
+contract PrivatePDcontract is owned {
+    address public from;
+    address public to;
+    GWALink public gwalink;
+    uint256 public wh_microcent;
+    uint256 public min_tx_microcent;
+    uint256 public cost_sum;
+    address public mpid;
+    PrivatePDcontract public next;
+ 
+    bool public started;
+    bool public endure;
+    bool public executed;
+    uint256 public zs_start;
+    uint256 public zs_end;
+    uint256 public zs_last;
+    uint256 public min_wh;
+    
+     struct ZS {
+        uint256 time;
+        uint256 power_in;
+        uint256 power_out;
+        address oracle;
+    }
+    
+    function PrivatePDcontract(GWALink _link,address _mpid,address _from, address _to,uint256 _wh_microcent,uint256 _min_tx_microcent,bool _endure) {
+        gwalink=_link;
+        from=_from;
+        to=_to;
+        wh_microcent=_wh_microcent;
+        min_tx_microcent=_min_tx_microcent;
+        mpid=_mpid;
+        endure=_endure;
+        executed=false;
+        min_wh=1;
+        if(_wh_microcent>0) {
+        min_wh=_min_tx_microcent/_wh_microcent;
+        }
+        started=false;
+    }
+    function init() {
+        var(time,power_in,power_out,oracle) = gwalink.zss(mpid);
+        
+        zs_start = power_in;
+
+        started=true;
+    }
+    function check() {
+        
+        var(cur_time,cur_power_in,cur_power_out,cur_oracle) = gwalink.zss(mpid);
+        zs_last = cur_power_in;
+        if((cur_power_in>zs_start+min_wh)&&(!executed)) {
+            zs_end= cur_power_in;
+            if(endure) {
+                cost_sum+=wh_microcent*(zs_end-zs_start);
+                init();
+            }
+        }
+    }
+    function stopEndure()  {
+        if((msg.sender!=owner)&&(msg.sender!=from)&&(msg.sender!=to)) throw;
+        if(!endure) throw;
+        endure=false;
+    }
+}
+
+contract StromDAOReading is owned {
+   GWALink public gwalink;
+   
+   mapping(address=>uint256) public readings;
+   event pinged(address link,uint256 time,uint256 total,uint256 delta);
+   uint256 lastReading=0;
+   bool public isPowerIn;
+   
+   function StromDAOReading(GWALink _gwalink,bool _isPowerIn) {
+       gwalink=_gwalink;
+       isPowerIn=_isPowerIn;
+   }
+   function pingDelta(uint256 _delta) {
+       readings[msg.sender]+=_delta;
+       if(isPowerIn)  gwalink.ping(msg.sender,now-lastReading,_delta,0);
+        else  gwalink.ping(msg.sender,now-lastReading,0,_delta);
+       pinged(msg.sender,now,readings[msg.sender],_delta);
+       lastReading=now;
+   }
+   
+   function pingReading(uint256 _reading) {
+      pingDelta(_reading-readings[msg.sender]);
+   }
 }
