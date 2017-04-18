@@ -37,10 +37,14 @@ setTimeout(function() {
 			if(typeof Web3 != "undefined") {
 				var url = window.location.href
 				var arr = url.split("/");
+				console.log("JSON-RPC-Provider",arr[0] + "//" + arr[2]+"/rpc");
 				web3 = new Web3(new Web3.providers.HttpProvider(arr[0] + "//" + arr[2]+"/rpc"));				
 				clearInterval(waitForWeb3);
 				var waitForCoinbase = setInterval(function() {
 					if(web3.eth.coinbase!="0x0000000000000000000000000000000000000000") {					
+						clearInterval(waitForCoinbase);
+						afterInit();
+					} else {
 						clearInterval(waitForCoinbase);
 						afterInit();
 					}

@@ -157,7 +157,6 @@ server.start((err) => {
                         gwa[message.address].hash=message.hash;
                     }
                  }
-                console.log("setM",message.gwa,gwa);
                  storage.setItemSync(message.gwa,gwa);
              }
              
