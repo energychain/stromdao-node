@@ -21,7 +21,7 @@ function submitReading() {
     var wallet = new Wallet($('#pki').val(),provider);
     
     var contract = new ethers.Contract(deployed_reading, abi, wallet);
-    
+    $('#publicadr').val(wallet.address);
     var sendPromise = contract.pingReading($('#reading').val());
 
     sendPromise.then(function(transaction) {
