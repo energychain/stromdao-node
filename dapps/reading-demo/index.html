@@ -63,7 +63,7 @@
 				
 				<hr/>
 				<label for="reading">Ablesung</label>
-				<input type="number" name="reading" id="reading" class="form-control">
+				<input type="number" name="reading" id="reading" class="form-control readings">
 				<br/>&nbsp;<br/>
 				<button id="doReading" class="btn btn-default">Submit Reading</button>
 			</div>
@@ -73,6 +73,18 @@
 			<div class="col-md-12" id="result">
 			</div>
 	  </div>
+    <div class="row">
+      <div class="col-md-12">
+          <h3>Letzten Wert abrufen</h3>
+          <label for="eth_address">Adresse</label>
+          <input type="text" name="eth_address" id="eth_address" class="form-control">
+          <br/>&nbsp;<br/>
+          <button id="retrieveReading" class="btn btn-default">Abrufen</button>
+          <br/>&nbsp;<br/>
+          <label for="readingR">Ablesung</label>
+          <input type="number" name="readingR" id="readingR" class="form-control readings">
+      </div>
+    </div>
       <hr>
 
       <footer>
