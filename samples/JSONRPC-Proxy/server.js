@@ -47,7 +47,7 @@ server.register(require('inert'), (err) => {
 		path: '/dapps/{param*}',
 		handler: {
 			directory: {
-				path: 'dapps'
+				path: '../../dapps'
 			}
 		}
 	});
