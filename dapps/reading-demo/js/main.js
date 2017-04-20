@@ -28,6 +28,7 @@ function submitReading() {
         console.log(transaction);
         html+="<strong>Energy Blockchain Transaction:</strong>"+transaction.hash;
         $('#result').html($('#result').html()+html);
+        $('#doReading').html("Messwert übermitteln");
     });
     
 }
@@ -39,17 +40,25 @@ $(document).ready(function()  {
     $('#doReading').on('click',function() {
         var html="";
        if($('#pki').val().length<30) {
+           
+                if($('#username').val().length>0) {
+                     var Wallet = ethers.Wallet;
+                     var wallet =  Wallet.createRandom();
+                      $('#pki').val(wallet.privateKey);    
+                     submitReading();
+                } else {
                 $('#doReading').html("(Erstelle privaten Schlüssel - lange warten!)");
-               var Wallet = ethers.Wallet;
-               
-               console.log("Generating a pseudo browser wallet");   
-                
-               Wallet.fromBrainWallet($('#username').val(), $('#password').val()).then(function(wallet) {
-                    html+="<strong>Etheresum-Adresse:</strong>"+wallet.address+"<br/>";
-                    $('#pki').val(wallet.privateKey);    
+                   var Wallet = ethers.Wallet;
+                   
+                   console.log("Generating a pseudo browser wallet");   
                     
-                    submitReading();
-                }); 
+                   Wallet.fromBrainWallet($('#username').val(), $('#password').val()).then(function(wallet) {
+                        html+="<strong>Etheresum-Adresse:</strong>"+wallet.address+"<br/>";
+                        $('#pki').val(wallet.privateKey);    
+                        
+                        submitReading();
+                    }); 
+                }
        } else {
            $('#result').html(html);
            submitReading();
