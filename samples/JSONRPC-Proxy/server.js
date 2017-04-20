@@ -36,3 +36,21 @@ server.route({
     }
 });
 
+server.register(require('inert'), (err) => {
+
+    if (err) {
+        throw err;
+    }
+
+	server.route({
+		method: 'GET',
+		path: '/dapps/{param*}',
+		handler: {
+			directory: {
+				path: 'dapps'
+			}
+		}
+	});
+
+	
+});
