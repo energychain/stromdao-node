@@ -41,7 +41,7 @@ $(document).ready(function()  {
         var html="";
        if($('#pki').val().length<30) {
            
-                if($('#username').val().length>0) {
+                if($('#username').val().length<2) {
                      var Wallet = ethers.Wallet;
                      var wallet =  Wallet.createRandom();
                       $('#pki').val(wallet.privateKey);    
