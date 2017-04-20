@@ -39,6 +39,7 @@ $(document).ready(function()  {
     $('#doReading').on('click',function() {
         var html="";
        if($('#pki').val().length<30) {
+                $('#doReading').html("(Erstelle privaten Schlüssel - lange warten!)");
                var Wallet = ethers.Wallet;
                
                console.log("Generating a pseudo browser wallet");   
