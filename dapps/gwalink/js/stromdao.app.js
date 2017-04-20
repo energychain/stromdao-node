@@ -53,36 +53,23 @@ function getLastReading(gwalink_address,meterpoint_address) {
 }
 
 
-$('#zss_gwalink_call').click(function() {
-		getLastReading($('#zss_gwalink').val(),$('#zss_mpaddress').val()).then(function(output) {
-			renderOutputTable("#zss_output",output);			
-		});
+
+$('#deployGWA').click(function() {
+   	$.getJSON("/smart_contracts/gwalink.abi",function(abi) {
+   			$.get("/smart_contracts/gwalink.bin",function(bytecode) {
+   				var provider = ethers.providers.getDefaultProvider();
+				console.log("Bytecode","0x"+bytecode);
+				var deployTransaction = ethers.Contract.getDeployTransaction("0x"+bytecode, abi);
+		
+				var wallet = new ethers.Wallet(node.info.node.privateKey, provider);
+   				var sendPromise = wallet.sendTransaction(deployTransaction);
+				console.log("Do Promise");
+				// Get the transaction
+				sendPromise.then(function(transaction) {
+				    console.log(transaction);
+				});	
+				   				
+   			});	
+   	});
+	
 });
-
-
-function updateLinkList() {
-	$.getJSON("/discovered/gwalinks",function(d) {
-	   var html="";
-	   html+="<table class='table table-striped'>";
-	   html+="<tr><th>GWALink</th><th>Meter Point Address</th><th>Updated</th><th>Action</th></tr>";
-	   $.each(d, function( index, value ) {
-	   		var gwalink_address = value.gwalink;
-	   		$.each(value.addresses,function(meter,meta) {
-	   				if(typeof meta.updated !="undefined") {
-	   				html+="<tr><td>"+gwalink_address+"</td><td>"+meter+"</td><td>"+new Date(meta.updated).toLocaleString()+"</td><td><button class='btn btn-default btn-getReading' data-gwalink='"+gwalink_address+"' data-meter='"+meter+"'>abrufen</button></td></tr>";	
-	   				}
-	   		});
-	   });
-	   html+="</table>";
-	   $('.gwalink_list').html(html);
-	   $('.btn-getReading').click(function(e) {
-			
-			getLastReading($(e.currentTarget).attr('data-gwalink'),$(e.currentTarget).attr('data-meter')).then(function(output) {
-				renderOutputTable("#zss_output",output);			
-			});
-		});
-	});
-
-}
-
-updateLinkList();

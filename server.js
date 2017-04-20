@@ -2,6 +2,8 @@
 var ipfsAPI = require('ipfs-api');
 var ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'});
 var storage = require('node-persist');
+var Web3 = require('web3');
+const fs = require("fs");
 
 const Hapi = require('hapi');
 // Create a server with a host and port
@@ -109,7 +111,15 @@ server.register({register:require('stromdao-discovergy'),options:{mpid:'EASYMETE
     }
 });
 
-// Start the server
+
+/*
+server.register({register:require('./deploy_service.js'),options:{mpid:'EASYMETER_60176785'}}, (err) => {
+    if (err) {
+        console.error('Failed to load plugin:', err);
+    }
+    // Start the server
+});
+*/
 server.start((err) => {
     storage.initSync();
     
@@ -170,5 +180,3 @@ server.start((err) => {
     }
     console.log('Server running at:', server.info.uri);
 });
-
-
