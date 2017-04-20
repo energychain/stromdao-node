@@ -6,12 +6,9 @@ var deployed_reading="0x1E6c8aD97c3Eb1dC8b5b4FCE6cEE993938404Ac5";
 
 
 function getReading(eth_address) {
-    var Wallet = ethers.Wallet;
-    var wallet = new Wallet($('#pki').val(),provider);
-    
-    var contract = new ethers.Contract(deployed_reading, abi, wallet);
+    var contract = new ethers.Contract(deployed_reading, abi, provider);
     contract.readings(eth_address).then(function(o) {
-        $('#readingR').val(o.toString());
+        $('#readingR').val(o[0].toString());
         console.log(o);
     });
 }
