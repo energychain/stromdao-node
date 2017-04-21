@@ -1,8 +1,9 @@
 {
   "name": "stromdao-node",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Fullstack Node with delegation to handle decentral browser clients in a DAO for the energy market",
   "main": "index.js",
+  "engines" : { "node" : ">=0.12" },
   "scripts": {
     "prestart": "ipfs daemon --enable-pubsub-experiment & sleep 4",
     "test": "node_modules/.bin/mocha --harmony -w"
