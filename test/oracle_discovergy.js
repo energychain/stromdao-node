@@ -35,12 +35,14 @@ describe('StromDAO Node', function() {
     var sendPromise = contract.pingReading(new Date().getTime());
             
     sendPromise.then(function(transaction) {
-
-      
+                        console.log(transaction);
                         assert.equal(transaction.hash.length,67);
-             
-         
         });
     });
   });
+   describe('Finish Testing', function() {
+         it('Tests completed', function() {
+             process.exit(0);
+         });
+   });
 });
