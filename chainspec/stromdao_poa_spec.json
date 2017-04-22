@@ -1,8 +1,20 @@
 {
     "name": "StromDAO PoA Chain",   
     "engine": {
-				"instantSeal": { "params": {} }
-	},
+        "authorityRound": {
+            "params": {
+                "gasLimitBoundDivisor": "0x400",
+                "stepDuration": "10",
+				"blockReward": "100",				
+                "validators" : {
+                    "list": [
+						"0x0015e5E3D9f98859BA2624558675b64B3cae3240",
+						"0x00a53911B2771439318cff4Aaf1d91d7d08DA21f"
+					]
+                }
+            }
+        }
+    },
     "params": {
         "maximumExtraDataSize": "0x20",
         "minGasLimit": "0x1388",

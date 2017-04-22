@@ -6,3 +6,4 @@ orbit-db/
 orbit/
 test.js
 .node-persist/
+chainspec/chains/stromdao_poa
