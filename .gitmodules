@@ -1,0 +1,3 @@
+[submodule "samples/SmartMeterReading"]
+	path = samples/SmartMeterReading
+	url = https://github.com/energychain/StromDAO-SmartMeterReading
