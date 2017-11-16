@@ -1,0 +1,125 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "jotted",
+        "scope": null,
+        "escapedName": "jotted",
+        "name": "jotted",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/home/zoernert/Development/stromdao-dapp/StromDAO-Browser/showcase"
+    ]
+  ],
+  "_from": "jotted@latest",
+  "_id": "jotted@1.5.1",
+  "_inCache": true,
+  "_location": "/jotted",
+  "_nodeVersion": "6.9.1",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/jotted-1.5.1.tgz_1478527219094_0.45104517228901386"
+  },
+  "_npmUser": {
+    "name": "ghinda",
+    "email": "contact@ghinda.net"
+  },
+  "_npmVersion": "3.10.9",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "jotted",
+    "scope": null,
+    "escapedName": "jotted",
+    "name": "jotted",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/jotted/-/jotted-1.5.1.tgz",
+  "_shasum": "8c1a8c0258e8556a43f63a5eb928f782813c2fdd",
+  "_shrinkwrap": null,
+  "_spec": "jotted",
+  "_where": "/home/zoernert/Development/stromdao-dapp/StromDAO-Browser/showcase",
+  "author": {
+    "name": "Ionut Colceriu",
+    "email": "contact@ghinda.net"
+  },
+  "bugs": {
+    "url": "https://github.com/ghinda/jotted/issues"
+  },
+  "dependencies": {},
+  "description": "Environment for showcasing HTML, CSS and JavaScript, with editable source.",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-es2015-rollup": "^1.0.0",
+    "connect-livereload": "^0.6.0",
+    "grunt": "^1.0.1",
+    "grunt-assemble": "^0.5.0",
+    "grunt-build-control": "^0.7.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-stylus": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-rollup": "^0.8.0",
+    "grunt-saucelabs": "^9.0.0",
+    "grunt-standard": "^2.0.0",
+    "matchdep": "^1.0.0",
+    "rollup-plugin-babel": "^2.3.9"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "8c1a8c0258e8556a43f63a5eb928f782813c2fdd",
+    "tarball": "https://registry.npmjs.org/jotted/-/jotted-1.5.1.tgz"
+  },
+  "files": [
+    "jotted*",
+    "LICENSE",
+    "README.md"
+  ],
+  "gitHead": "0e5abe784e82a7f454871e71f9c66ad783c8ee41",
+  "homepage": "https://github.com/ghinda/jotted#readme",
+  "keywords": [
+    "demo",
+    "fiddle",
+    "pen",
+    "code",
+    "editor"
+  ],
+  "license": "MIT",
+  "main": "jotted.js",
+  "maintainers": [
+    {
+      "name": "ghinda",
+      "email": "contact@ghinda.net"
+    }
+  ],
+  "name": "jotted",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghinda/jotted.git"
+  },
+  "scripts": {
+    "test": "grunt test",
+    "watch": "grunt server"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "beforeEach",
+      "it",
+      "expect"
+    ]
+  },
+  "version": "1.5.1"
+}

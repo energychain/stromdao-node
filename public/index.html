@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>	 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>Fury Network - Energy Blockchain IDE</title>
+	<link href="../css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="jotted/jotted.min.css">    
+	<link rel=stylesheet href="codemirror/lib/codemirror.css">	
+	<script src="codemirror/lib/codemirror.js"></script>
+	<script src="codemirror/mode/xml/xml.js"></script>
+	<script src="codemirror/mode/javascript/javascript.js"></script>
+	<script src="codemirror/mode/css/css.js"></script>
+	<script src="codemirror/mode/htmlmixed/htmlmixed.js"></script>
+	<script src="codemirror/addon/edit/matchbrackets.js"></script>
+    <style>
+    h3 {
+			color:#909090;
+	}
+    </style>
+    <link rel="manifest" href="/manifest.json">
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+  <script>
+    var OneSignal = window.OneSignal || [];
+    OneSignal.push(["init", {
+      appId: "80282eb4-5cb2-4cba-b8a3-158fc66f20b8",
+      autoRegister: false,
+      notifyButton: {
+        enable: false /* Set to false to hide */
+      }
+    }]);
+  </script>
+  </head>
+  <body >
+	<div class="container" style="margin-top:30px;">
+		    <div class="row">
+				<div class="col-md-6">
+					<h1 class="fshide"><img src="./fury32.png" style="float:left;"> fury.network</h1> 
+				</div>
+				<div class="col-md-6" style="text-align:right"> 
+					<a href='https://stromdao.de/'><img src='../stromdao_logo.png'/></a><br/>
+					<em style='color:#999999'>digital energy infrastructure for tomorrow.</em>
+			    </div>
+			</div>
+				
+		<div id="editor_1" style="height:800px;"></div>		
+		
+		<div class="form-group fshide">
+		 <label for="colabURL">Inject URL</label>
+		 <input type="text" id="colabURL" readonly="true" class="form-control"/>
+		 <label for="fsURL">Showcase URL</label>
+		 <input type="text" id="fsURL" readonly="true" class="form-control"/>		 		 
+		 <hr/>
+		 <button onclick="TogetherJS(this); return false;" class="btn btn-default">Collaborate</button>
+		 <button class="btn btn-default" data-toggle="button" id="subscribe"><span class="glyphicon glyphicon-bell"></span> Usage Alert</button>
+		</div>
+		<hr/>		
+		<footer style="margin-top:60px;">&copy; 2017 <a href="https://stromdao.de/">StromDAO Ltd.</a> | <a href="https://gitter.im/stromdao/fury.network?utm_source=share-link&utm_medium=link&utm_campaign=share-link">Community</a></footer>
+	</div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://unpkg.com/ipfs/dist/index.min.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>        
+    <script src="../js/bootstrap.min.js"></script>
+	<script src="https://cdn.rawgit.com/energychain/StromDAO-BusinessObject/master/dist/loader.js"></script>
+	<script src="jotted/jotted.min.js"></script>
+	<script src="codemirror/codemirror.js"></script>
+	<script src="codemirror/mode/javascript/javascript.js"></script>
+	<script src="playground_v2.js"></script>
+	<script src="https://togetherjs.com/togetherjs-min.js"></script>
+  </body>
+</html>
